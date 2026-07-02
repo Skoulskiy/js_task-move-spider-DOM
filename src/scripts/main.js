@@ -10,6 +10,10 @@ const wallWidth = wall.clientWidth;
 const wallHeight = wall.clientHeight;
 
 document.addEventListener('click', (e) => {
+  if (!wall.contains(e.target)) {
+    return;
+  }
+
   const minX = 0;
   const maxX = wallWidth - spiderWidth;
   const minY = 0;
@@ -17,8 +21,8 @@ document.addEventListener('click', (e) => {
 
   const wallPosition = wall.getBoundingClientRect();
 
-  let x = e.clientX - wallPosition.left - spiderWidth / 2;
-  let y = e.clientY - wallPosition.top - spiderHeight / 2;
+  let x = e.clientX - (wallPosition.left + wall.clientLeft) - spiderWidth / 2;
+  let y = e.clientY - (wallPosition.top + wall.clientTop) - spiderHeight / 2;
 
   x = Math.min(Math.max(x, minX), maxX);
   y = Math.min(Math.max(y, minY), maxY);
