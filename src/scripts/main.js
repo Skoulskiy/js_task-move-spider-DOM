@@ -1,32 +1,22 @@
-'use strict';
+'use-strict';
 
-const spider = document.querySelector('.spider');
 const wall = document.querySelector('.wall');
+const spider = document.querySelector('.spider');
 
-const spiderWidth = spider.clientWidth;
-const spiderHeight = spider.clientHeight;
+const clamp = (value, min, max) => Math.max(min, Math.min(value, max));
 
-const wallWidth = wall.clientWidth;
-const wallHeight = wall.clientHeight;
+wall.addEventListener('click', (e) => {
+  const rect = wall.getBoundingClientRect();
 
-document.addEventListener('click', (e) => {
-  if (!wall.contains(e.target)) {
-    return;
-  }
+  const x = e.clientX - rect.left - wall.clientLeft;
+  const y = e.clientY - rect.top - wall.clientTop;
 
-  const minX = 0;
-  const maxX = wallWidth - spiderWidth;
-  const minY = 0;
-  const maxY = wallHeight - spiderHeight;
+  let l = x - spider.offsetWidth / 2;
+  let t = y - spider.offsetHeight / 2;
 
-  const wallPosition = wall.getBoundingClientRect();
+  l = clamp(l, 0, wall.clientWidth - spider.offsetWidth);
+  t = clamp(t, 0, wall.clientHeight - spider.offsetHeight);
 
-  let x = e.clientX - (wallPosition.left + wall.clientLeft) - spiderWidth / 2;
-  let y = e.clientY - (wallPosition.top + wall.clientTop) - spiderHeight / 2;
-
-  x = Math.min(Math.max(x, minX), maxX);
-  y = Math.min(Math.max(y, minY), maxY);
-
-  spider.style.top = `${y}px`;
-  spider.style.left = `${x}px`;
+  spider.style.left = `${l}px`;
+  spider.style.top = `${t}px`;
 });
