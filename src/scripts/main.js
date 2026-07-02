@@ -1,11 +1,11 @@
-'use-strict';
+'use strict';
 
 const wall = document.querySelector('.wall');
 const spider = document.querySelector('.spider');
 
 const clamp = (value, min, max) => Math.max(min, Math.min(value, max));
 
-wall.addEventListener('click', (e) => {
+document.addEventListener('click', (e) => {
   const rect = wall.getBoundingClientRect();
 
   const x = e.clientX - rect.left - wall.clientLeft;
